@@ -77,7 +77,9 @@ class BreweriesController < ApplicationController
       admin_accounts = {"admin" => "secret", "pete" => "jeba", "repe" => "sorsa", "ruby" => "rails"}
 
       authenticate_or_request_with_http_basic do |username, password|
-        password == admin_accounts.fetch(username)
+        if admin_accounts.has_key?(username)
+          password == admin_accounts.fetch(username)
+        end
       end
     end
 end
