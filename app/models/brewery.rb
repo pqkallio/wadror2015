@@ -4,6 +4,15 @@ class Brewery < ActiveRecord::Base
   has_many :beers, dependent: :destroy
   has_many :ratings, through: :beers
 
+  validate :year_must_be_between_1042_and_present_year
+  validates :year, numericality: { only_integer: true }
+  validates :name, presence: true
+
+  def year_must_be_between_1042_and_present_year
+    if year < 1042 || year > Time.now.year
+      errors.add(:year, "must be between 1042 and the present year")
+    end
+  end
 
   def print_report
     puts name

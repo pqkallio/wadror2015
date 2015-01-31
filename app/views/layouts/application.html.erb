@@ -12,12 +12,19 @@
   <%= link_to 'breweries', breweries_path %>
   <%= link_to 'beers', beers_path %>
   <%= link_to 'ratings', ratings_path %>
+  <%= link_to 'beer clubs', beer_clubs_path %>
+  <%= link_to 'users', users_path %>
+  |
+  <% if current_user.nil? %>
+    <%= link_to 'sign in', signin_path %>
+    <%= link_to 'sign up', signup_path %>
+  <% else %>
+    <%= link_to current_user.username, user_path(session[:user_id]) %>
+    <%= link_to 'rate a beer', new_rating_path %>
+    <%= link_to 'join a club', new_membership_path %>
+    <%= link_to 'sign out', signout_path, :method => :delete %>
+  <% end %>
 </div>
-
-<% if not session[:user_id].nil? %>
-    <p><%= User.find(session[:user_id]).username %> signed in</p>
-<% end %>
-
 <%= yield %>
 
 </body>
