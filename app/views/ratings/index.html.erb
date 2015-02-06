@@ -8,5 +8,7 @@
   <% end %>
 
   <br/>
-  <%= link_to 'New rating', new_rating_path %>
+  <% if current_user %>
+    <%= link_to 'New rating', new_rating_path %>
+  <% end %>
 </ul>

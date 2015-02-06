@@ -13,9 +13,16 @@ class User < ActiveRecord::Base
   has_many :beer_clubs, through: :memberships
 
   def password_validation
-    unless password.match(/[A-Z]/) && password.match(/[[:digit:]]/) && password.length > 3
-      errors.add(:password, "The password needs to contain at least one digit and one capital letter, and the minimum password length is four characters.")
+    if not password.nil?
+      unless password.match(/[A-Z]/) && password.match(/[[:digit:]]/) && password.length > 3
+        errors.add(:password, "The password needs to contain at least one digit and one capital letter, and the minimum password length is four characters.")
+      end
     end
+  end
+
+  def favorite_beer
+    return nil if ratings.empty?
+    ratings.sort_by(&:score).last.beer
   end
 
 end
