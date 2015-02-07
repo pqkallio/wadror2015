@@ -3,7 +3,9 @@
 <h2><%= @user.username %></h2>
 
 <p>has made <%= @user.ratings.count %> ratings with the average of <%= @user.average_rating %> points</p>
-
+<p>favorite beer: <%= @user.favorite_beer %></p>
+<p>favorite brewery: <%= @user.favorite_brewery %></p>
+<p>favorite style: <%= @user.favorite_style %></p>
 <p>member of
   <% @user.beer_clubs.each do |club| %>
       <%= link_to club.name, beer_club_path(club.id) %>
