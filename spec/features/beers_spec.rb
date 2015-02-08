@@ -3,9 +3,11 @@ require 'rails_helper'
 describe "Beer" do
   before :each do
     FactoryGirl.create(:brewery)
+    FactoryGirl.create(:user)
   end
 
   it "can be created if name field is not empty" do
+    sign_in(username:"Pekka", password:"Foobar1")
     create_new_beer('Orkku')
 
     expect(current_path).to eq(beers_path)
@@ -15,6 +17,7 @@ describe "Beer" do
   end
 
   it "can't be created if name field is not empty" do
+    sign_in(username:"Pekka", password:"Foobar1")
     create_new_beer('')
 
     expect(page).to have_content 'New Beer  '
