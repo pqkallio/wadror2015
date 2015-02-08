@@ -1,0 +1,15 @@
+language: ruby
+rvm:
+- 2.2.0
+script:
+- bundle exec rake db:migrate --trace
+- RAILS_ENV=test bundle exec rake db:migrate --trace
+- bundle exec rake db:test:prepare
+- bundle exec rspec -fd spec/
+deploy:
+  provider: heroku
+  api_key:
+    secure: DLp1GmTBsF1x4HR7eLCTTx+bLUSY1tbvDsZoAbGbyIIWtj8ZbnXtZw9MUnoXMkZ+biqbt2TP+9lVmCq3nu1UfA2DtZ+csYG9v5LY6hJKhI2phQyI5BJodyzSupttNiQWwEdtCrMUdjMN4MsixCU2vTpU48nPIt2vOrV+PgdKRLY=
+  app: still-reef-5914
+  run: "rake db:migrate"
+  strategy: git

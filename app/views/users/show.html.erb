@@ -19,7 +19,7 @@
     <li>
       <%= rating %>
       <% if @user == current_user %>
-          <%= link_to 'delete', rating, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'delete', rating, method: :delete %>
       <% end %>
     </li>
   <% end %>

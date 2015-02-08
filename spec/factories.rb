@@ -23,4 +23,9 @@ FactoryGirl.define do
     brewery
     style "Lager"
   end
+
+  factory :rating3, class: Rating do
+    score 10
+    beer
+  end
 end
