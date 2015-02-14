@@ -27,7 +27,20 @@
 <% end %>
 
 <% if current_user %>
-<%= link_to 'Edit', edit_beer_club_path(@beer_club) %><br/>
-<%= link_to 'Destroy the club', @beer_club, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+    <% if !@beer_club.members.include? current_user %>
+      <%= form_for(@membership) do |f| %>
+          <%= f.hidden_field :beer_club_id %>
+          <%= f.submit value:"join the club" %>
+      <% end %>
+    <% else %>
+      <%= form_for(@membership, method: "delete") do |f| %>
+          <%= f.hidden_field :beer_club_id %>
+          <%= f.submit value: "end the membership" %>
+      <% end %>
+    <% end %>
+
+    <%= link_to 'Edit', edit_beer_club_path(@beer_club) %><br/>
+    <%= link_to 'Destroy the club', @beer_club, method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>
 </p>

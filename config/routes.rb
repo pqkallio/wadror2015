@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resources :places, only: [:index, :show]
 
+  resources :styles
+
   resource :session, only: [:new, :create, :delete]
 
   root 'breweries#index'

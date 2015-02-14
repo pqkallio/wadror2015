@@ -1,0 +1,12 @@
+<h2>List of styles</h2>
+
+<ul>
+  <% @styles.each do |style| %>
+      <li> <%= link_to style.name, style_path(style) %> </li>
+  <% end %>
+
+  <br/>
+  <% if current_user %>
+      <%= link_to 'New style', new_style_path %>
+  <% end %>
+</ul>

@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
 
   def favorite_style
     return nil if ratings.empty?
-    get_highest_rating_style
+    get_highest_rating_style.name
   end
 
   def favorite_brewery

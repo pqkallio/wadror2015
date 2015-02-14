@@ -61,6 +61,15 @@
         null,
         null,
         1,
+        0,
+        0,
+        0,
+        null,
+        0,
+        0,
+        0,
+        null,
+        null,
         null,
         null,
         null,
@@ -121,6 +130,16 @@
         null,
         1,
         0,
+        null,
+        null,
+        1,
+        0,
+        0,
+        null,
+        0,
+        null,
+        null,
+        null,
         null,
         null
       ],
@@ -146,6 +165,7 @@
         1,
         1,
         null,
+        1,
         1,
         1,
         1,
@@ -203,6 +223,11 @@
         0,
         null,
         null,
+        null
+      ],
+      "/home/kallionpetri/Documents/RubyProjects/wadror2015/app/models/style.rb": [
+        1,
+        1,
         null
       ],
       "/home/kallionpetri/Documents/RubyProjects/wadror2015/app/models/user.rb": [
@@ -304,9 +329,9 @@
         9,
         null,
         9,
-        14,
-        14,
-        14,
+        23,
+        17,
+        17,
         null,
         null,
         null,
@@ -470,6 +495,8 @@
         null,
         null,
         1,
+        0,
+        0,
         null,
         null,
         null,
@@ -689,6 +716,16 @@
         null,
         0,
         null,
+        0,
+        null,
+        null,
+        1,
+        null,
+        1,
+        0,
+        0,
+        null,
+        null,
         null
       ],
       "/home/kallionpetri/Documents/RubyProjects/wadror2015/app/controllers/ratings_controller.rb": [
@@ -724,6 +761,6 @@
         null
       ]
     },
-    "timestamp": 1423775475
+    "timestamp": 1423906649
   }
 }

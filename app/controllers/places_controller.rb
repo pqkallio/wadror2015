@@ -26,6 +26,16 @@ class PlacesController < ApplicationController
 
     @address = ERB::Util.url_encode(@place.street) + "," + ERB::Util.url_encode(@place.city) + ERB::Util.url_encode(@place.country)
 
+    @gmap_api_key = get_gmap_api_key
+
     render :show
   end
+
+  private
+
+  def get_gmap_api_key
+    raise "GMAP_APIKEY env not set" if ENV['GMAP_APIKEY'].nil?
+    ENV['GMAP_APIKEY']
+  end
+
 end

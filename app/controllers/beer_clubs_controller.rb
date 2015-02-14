@@ -11,6 +11,15 @@ class BeerClubsController < ApplicationController
   # GET /beer_clubs/1
   # GET /beer_clubs/1.json
   def show
+    if current_user
+      if @beer_club.members.include? current_user
+        @membership = current_user.memberships.find_by(beer_club_id: @beer_club.id)
+      else
+        @membership = Membership.new
+        @membership.user_id = current_user.id
+        @membership.beer_club_id = @beer_club.id
+      end
+    end
   end
 
   # GET /beer_clubs/new
@@ -72,4 +81,14 @@ class BeerClubsController < ApplicationController
     def beer_club_params
       params.require(:beer_club).permit(:name, :founded, :city)
     end
+
+    def user_in_club
+      if BeerClub.find_by(id:@beer_club.id).members.include?(current_user)
+        return true
+      else
+        return false
+      end
+
+    end
+
 end

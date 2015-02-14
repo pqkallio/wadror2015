@@ -2,7 +2,9 @@ require 'rails_helper'
 
 describe "User" do
   before :each do
-    @user = FactoryGirl.create :user
+    @user = FactoryGirl.create(:user)
+    @lager = FactoryGirl.create(:style)
+    @ipa = FactoryGirl.create(:style, name: "IPA")
   end
 
   describe "who has signed up" do
@@ -81,8 +83,8 @@ def create_breweries_styles_beers_and_ratings_for_user
   brewdog = FactoryGirl.create(:brewery, name:"BrewDog", year:"2011")
   koff = FactoryGirl.create(:brewery, name:"Koff", year:"1897")
 
-  punk_ipa = FactoryGirl.create(:beer, name:"Punk IPA", style:"IPA", brewery:brewdog)
-  iso3 = FactoryGirl.create(:beer, name:"Iso 3", style:"Lager", brewery:koff)
+  punk_ipa = FactoryGirl.create(:beer, name:"Punk IPA", style:@ipa, brewery:brewdog)
+  iso3 = FactoryGirl.create(:beer, name:"Iso 3", style:@lager, brewery:koff)
 
   @user.ratings << FactoryGirl.create(:rating, score:30, beer:iso3)
   @user.ratings << FactoryGirl.create(:rating, score:40, beer:punk_ipa)
