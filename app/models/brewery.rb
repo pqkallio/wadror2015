@@ -8,6 +8,9 @@ class Brewery < ActiveRecord::Base
   validates :year, numericality: { only_integer: true }
   validates :name, presence: true
 
+  scope :active, -> { where active:true }
+  scope :retired, -> { where active:[nil, false] }
+
   def year_must_be_between_1042_and_present_year
     if year < 1042 || year > Time.now.year
       errors.add(:year, "must be between 1042 and the present year")

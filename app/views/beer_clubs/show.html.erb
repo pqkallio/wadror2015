@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Name:</strong>
   <%= @beer_club.name %>
@@ -40,7 +38,7 @@
       <% end %>
     <% end %>
 
-    <%= link_to 'Edit', edit_beer_club_path(@beer_club) %><br/>
-    <%= link_to 'Destroy the club', @beer_club, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Edit', edit_beer_club_path(@beer_club), class:"btn btn-primary" %><br/>
+    <%= link_to 'Destroy the club', @beer_club, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
 <% end %>
 </p>

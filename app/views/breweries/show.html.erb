@@ -1,7 +1,8 @@
-<p id="notice"><%= notice %></p>
-
 <h2>
   <%= @brewery.name %>
+  <% unless @brewery.active %>
+    <span class="label label-info">retired</span>
+  <% end %>
 </h2>
 
 <p>
@@ -24,6 +25,6 @@
 </p>
 
 <% if current_user %>
-    <%= link_to 'Edit', edit_brewery_path(@brewery) %><br/>
-    <%= link_to 'Destroy the brewery', @brewery, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Edit', edit_brewery_path(@brewery), class:"btn btn-primary" %><br/>
+    <%= link_to 'Destroy the brewery', @brewery, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
 <% end %>

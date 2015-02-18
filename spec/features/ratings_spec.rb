@@ -47,7 +47,7 @@ describe "Ratings page" do
     expect(page).to have_content 'Number of ratings: 4'
 
     user.ratings.each do |rating|
-      expect(page).to have_content "#{rating.beer.name} #{rating.score} #{user.username}"
+      expect(page).to have_content "#{rating.beer.name} #{rating.beer.brewery.name} #{rating.score} #{user.username}"
     end
 
   end
