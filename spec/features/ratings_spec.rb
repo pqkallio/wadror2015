@@ -33,8 +33,8 @@ describe "Ratings page" do
     visit ratings_path
 
     expect(Rating.count).to eq(0)
-    expect(page).to have_content 'List of ratings'
-    expect(page).to have_content 'Number of ratings: 0'
+    expect(page).to have_content 'Ratings'
+    expect(page).to have_content 'Total number of ratings made: 0'
   end
 
   it "shows ratings if ratings are made" do
@@ -43,8 +43,8 @@ describe "Ratings page" do
     visit ratings_path
 
     expect(Rating.count).to eq(4)
-    expect(page).to have_content 'List of ratings'
-    expect(page).to have_content 'Number of ratings: 4'
+    expect(page).to have_content 'Ratings'
+    expect(page).to have_content 'Total number of ratings made: 4'
 
     user.ratings.each do |rating|
       expect(page).to have_content "#{rating.beer.name} #{rating.beer.brewery.name} #{rating.score} #{user.username}"

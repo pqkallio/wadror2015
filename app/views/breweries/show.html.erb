@@ -1,9 +1,17 @@
-<h2>
-  <%= @brewery.name %>
-  <% unless @brewery.active %>
-    <span class="label label-info">retired</span>
-  <% end %>
-</h2>
+<div class="row">
+  <div class="col-md-3">
+    <h2>
+      <%= @brewery.name %>
+      <% unless @brewery.active %>
+        <span class="label label-info">retired</span>
+      <% end %>
+    </h2>
+  </div>
+  <div>
+    <!-- Siirrä tämä alanappuloihin -->
+    <%= link_to "change activity", toggle_activity_brewery_path(@brewery.id), method: :post, class: "btn btn-primary" %>
+  </div>
+</div>
 
 <p>
   <em>Established in
@@ -24,7 +32,4 @@
   <% end %>
 </p>
 
-<% if current_user %>
-    <%= link_to 'Edit', edit_brewery_path(@brewery), class:"btn btn-primary" %><br/>
-    <%= link_to 'Destroy the brewery', @brewery, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
-<% end %>
+<%= edit_and_destroy_buttons(@brewery) %>

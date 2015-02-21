@@ -1,0 +1,24 @@
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Favorite beer</th>
+    <th>Favorite brewery</th>
+    <th>Favorite style</th>
+    <th>Ratings made</th>
+    <th>Ratings average</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% top_raters.each do |rater| %>
+      <tr>
+        <td><%= link_to rater.username, user_path(rater) %></td>
+        <td><%= rater.favorite_beer %></td>
+        <td><%= rater.favorite_brewery %></td>
+        <td><%= rater.favorite_style %></td>
+        <td><%= rater.ratings.count %></td>
+        <td><%= rater.average_rating.round(1) %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

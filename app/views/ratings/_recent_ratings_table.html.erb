@@ -1,0 +1,29 @@
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>Beer</th>
+    <th>Brewery</th>
+    <th>Score</th>
+    <th>Rated by</th>
+    <th>Rated at</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% recent_ratings.each do |rating| %>
+      <tr>
+        <td><%= link_to rating.beer.name, beer_path(rating.beer) %></td>
+        <td><%= link_to rating.beer.brewery.name, brewery_path(rating.beer.brewery) %></td>
+        <td><%= rating.score %></td>
+        <td><%= link_to rating.user.username, user_path(rating.user) %></td>
+        <td>
+          <% time = rating.created_at.getlocal %>
+          <% if time.today? %>
+              <%= "Today at #{time.hour}:#{time.min}" %>
+          <% else %>
+              <%= "#{time.day}.#{time.month}.#{time.year} #{time.hour}:#{time.min}" %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

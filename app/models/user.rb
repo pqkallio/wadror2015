@@ -20,6 +20,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.top_raters(n)
+    sorted_by_number_of_ratings_made_in_desc_order = User.all.sort_by{ |u| -(u.ratings.count||0) }
+    sorted_by_number_of_ratings_made_in_desc_order[0..n-1]
+  end
+
   def favorite_beer
     return nil if ratings.empty?
     ratings.order(score: :desc).limit(1).first.beer
@@ -37,7 +42,7 @@ class User < ActiveRecord::Base
 
   def get_highest_rating_style
     style_based_ratings = get_style_based_ratings
-    get_style_with_highest_average(style_based_ratings)
+    get_style_averages(style_based_ratings).max_by{ |k, v| v }[0]
   end
 
   def get_highest_rating_brewery
@@ -85,24 +90,14 @@ class User < ActiveRecord::Base
     brewery_hash
   end
 
-  def get_style_with_highest_average(style_based_ratings)
+  def get_style_averages(style_based_ratings)
     style_averages = Hash.new
 
     style_based_ratings.each do |key, value|
       style_averages[key] = 1.0 * value.inject { |sum, n| sum + n } / value.count
     end
 
-    highest_average = 0.0
-    style_with_highest_average = nil
-
-    style_averages.each do |key, value|
-      if value > highest_average
-        highest_average = value
-        style_with_highest_average = key
-      end
-    end
-
-    style_with_highest_average
+    style_averages
   end
 
   def get_brewery_with_highest_average(brewery_based_ratings)

@@ -1,8 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h2><%= @user.username %></h2>
+<h2><%= @user.username %>
+  <% if current_user.admin and !@user.account_enabled %>
+      <span class="label label-primary">account frozen</span>
+  <% end %>
+</h2>
 
-<p>has made <%= @user.ratings.count %> ratings with the average of <%= @user.average_rating %> points</p>
+<p>has made <%= @user.ratings.count %> ratings with the average of <%= round(@user.average_rating) %> points</p>
 <p>favorite beer: <%= @user.favorite_beer %></p>
 <p>favorite brewery: <%= @user.favorite_brewery %></p>
 <p>favorite style: <%= @user.favorite_style %></p>
@@ -24,7 +28,15 @@
     </li>
   <% end %>
 </ul>
+<% if current_user.admin and @user != current_user %>
+    <% if @user.account_enabled %>
+        <%= link_to "Freeze account", toggle_frozen_user_path(@user), class:"btn btn-alert", method:"post" %>
+    <% else %>
+        <%= link_to "Unfreeze account", toggle_frozen_user_path(@user), class:"btn btn-alert", method:"post" %>
+    <% end %>
+
+<% end %>
+
 <% if @user == current_user %>
-  <%= link_to 'Edit', edit_user_path(@user), class:"btn btn-primary" %> |
-  <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
+    <%= edit_and_destroy_buttons(@user) %>
 <% end %>
