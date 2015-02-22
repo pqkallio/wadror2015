@@ -31,92 +31,34 @@ class User < ActiveRecord::Base
   end
 
   def favorite_style
-    return nil if ratings.empty?
-    get_highest_rating_style.name
+    favorite :style
   end
 
   def favorite_brewery
+    favorite :brewery
+  end
+
+  def favorite(category)
     return nil if ratings.empty?
-    get_highest_rating_brewery.name
-  end
 
-  def get_highest_rating_style
-    style_based_ratings = get_style_based_ratings
-    get_style_averages(style_based_ratings).max_by{ |k, v| v }[0]
-  end
-
-  def get_highest_rating_brewery
-    brewery_based_ratings = get_brewery_based_ratings
-    get_brewery_with_highest_average(brewery_based_ratings)
-  end
-
-  def get_style_based_ratings
-    style_based_ratings = create_style_hash
-
-    ratings.each do |rating|
-      style_based_ratings[rating.beer.style] << rating.score
+    category_ratings = rated(category).inject([]) do |set, item|
+      set << {
+          item: item,
+          rating: rating_of(category, item) }
     end
 
-    style_based_ratings
+    category_ratings.sort_by { |item| item[:rating] }.last[:item]
   end
 
-  def get_brewery_based_ratings
-    brewery_based_ratings = create_brewery_hash
-
-    ratings.each do |rating|
-      brewery_based_ratings[rating.beer.brewery] << rating.score
-    end
-
-    brewery_based_ratings
+  def rated(category)
+    ratings.map{ |r| r.beer.send(category) }.uniq
   end
 
-  def create_style_hash
-    style_hash = Hash.new
-
-    ratings.each do |rating|
-      style_hash[rating.beer.style] = Array.new
+  def rating_of(category, item)
+    ratings_of_item = ratings.select do |r|
+      r.beer.send(category) == item
     end
-
-    style_hash
+    ratings_of_item.map(&:score).sum / ratings_of_item.count
   end
 
-  def create_brewery_hash
-    brewery_hash = Hash.new
-
-    ratings.each do |rating|
-      brewery_hash[rating.beer.brewery] = Array.new
-    end
-
-    brewery_hash
-  end
-
-  def get_style_averages(style_based_ratings)
-    style_averages = Hash.new
-
-    style_based_ratings.each do |key, value|
-      style_averages[key] = 1.0 * value.inject { |sum, n| sum + n } / value.count
-    end
-
-    style_averages
-  end
-
-  def get_brewery_with_highest_average(brewery_based_ratings)
-    brewery_averages = Hash.new
-
-    brewery_based_ratings.each do |key, value|
-      brewery_averages[key] = 1.0 * value.inject { |sum, n| sum + n } / value.count
-    end
-
-    highest_average = 0.0
-    brewery_with_highest_average = nil
-
-    brewery_averages.each do |key, value|
-      if value > highest_average
-        highest_average = value
-        brewery_with_highest_average = key
-      end
-    end
-
-    brewery_with_highest_average
-  end
 end

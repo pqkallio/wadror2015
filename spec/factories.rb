@@ -3,6 +3,7 @@ FactoryGirl.define do
     username "Pekka"
     password "Foobar1"
     password_confirmation "Foobar1"
+    account_enabled true
   end
 
   factory :rating do

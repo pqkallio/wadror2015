@@ -65,7 +65,7 @@ describe "User" do
       create_breweries_styles_beers_and_ratings_for_user
 
       visit user_path(@user)
-      expect(@user.favorite_style).to eq("IPA")
+      expect(@user.favorite_style).to eq(@ipa)
       expect(page).to have_content "favorite style: IPA"
     end
 
@@ -73,20 +73,20 @@ describe "User" do
       create_breweries_styles_beers_and_ratings_for_user
 
       visit user_path(@user)
-      expect(@user.favorite_brewery).to eq("BrewDog")
+      expect(@user.favorite_brewery).to eq(@brewdog)
       expect(page).to have_content "favorite brewery: BrewDog"
     end
   end
 end
 
 def create_breweries_styles_beers_and_ratings_for_user
-  brewdog = FactoryGirl.create(:brewery, name:"BrewDog", year:"2011")
-  koff = FactoryGirl.create(:brewery, name:"Koff", year:"1897")
+  @brewdog = FactoryGirl.create(:brewery, name:"BrewDog", year:"2011")
+  @koff = FactoryGirl.create(:brewery, name:"Koff", year:"1897")
 
-  punk_ipa = FactoryGirl.create(:beer, name:"Punk IPA", style:@ipa, brewery:brewdog)
-  iso3 = FactoryGirl.create(:beer, name:"Iso 3", style:@lager, brewery:koff)
+  @punk_ipa = FactoryGirl.create(:beer, name:"Punk IPA", style:@ipa, brewery:@brewdog)
+  @iso3 = FactoryGirl.create(:beer, name:"Iso 3", style:@lager, brewery:@koff)
 
-  @user.ratings << FactoryGirl.create(:rating, score:30, beer:iso3)
-  @user.ratings << FactoryGirl.create(:rating, score:40, beer:punk_ipa)
-  @user.ratings << FactoryGirl.create(:rating, score:10, beer:iso3)
+  @user.ratings << FactoryGirl.create(:rating, score:30, beer:@iso3)
+  @user.ratings << FactoryGirl.create(:rating, score:40, beer:@punk_ipa)
+  @user.ratings << FactoryGirl.create(:rating, score:10, beer:@iso3)
 end

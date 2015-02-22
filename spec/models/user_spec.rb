@@ -83,15 +83,19 @@ describe User do
     it "is the only rated beer's style if only one rating" do
       beer = create_beer_with_rating(10, user)
 
-      expect(user.favorite_style).to eq(beer.style.name)
+      expect(user.favorite_style).to eq(beer.style)
     end
 
     it "is the style with the highest average rating" do
-      create_beers_with_style_and_ratings(5, 9, 10, 12, "Lager", user)
-      create_beers_with_style_and_ratings(9, 10, 12, 18, "Ale", user)
-      create_beers_with_style_and_ratings(10, 12, 18, 30, "IPA", user)
+      lager = FactoryGirl.create(:style, name: "Lager")
+      ale = FactoryGirl.create(:style, name: "Ale")
+      ipa = FactoryGirl.create(:style, name: "IPA")
 
-      expect(user.favorite_style).to eq("IPA")
+      create_beers_with_style_and_ratings(5, 9, 10, 12, lager, user)
+      create_beers_with_style_and_ratings(9, 10, 12, 18, ale, user)
+      create_beers_with_style_and_ratings(10, 12, 18, 30, ipa, user)
+
+      expect(user.favorite_style).to eq(ipa)
     end
   end
 
@@ -109,15 +113,19 @@ describe User do
     it "is the only rated beer's brewery if only one rating" do
       beer = create_beer_with_rating(10, user)
 
-      expect(user.favorite_brewery).to eq(beer.brewery.name)
+      expect(user.favorite_brewery).to eq(beer.brewery)
     end
 
     it "is the brewery with the highest average rating" do
-      create_beers_with_brewery_and_ratings(5, 9, 10, 12, "Koff", user)
-      create_beers_with_brewery_and_ratings(9, 10, 12, 18, "Hartwall", user)
-      create_beers_with_brewery_and_ratings(10, 12, 18, 30, "BrewDog", user)
+      koff = FactoryGirl.create(:brewery, name: "Koff")
+      hartwall = FactoryGirl.create(:brewery, name: "Hartwall")
+      brewdog = FactoryGirl.create(:brewery, name: "BrewDog")
 
-      expect(user.favorite_brewery).to eq("BrewDog")
+      create_beers_with_brewery_and_ratings(5, 9, 10, 12, koff, user)
+      create_beers_with_brewery_and_ratings(9, 10, 12, 18, hartwall, user)
+      create_beers_with_brewery_and_ratings(10, 12, 18, 30, brewdog, user)
+
+      expect(user.favorite_brewery).to eq(brewdog)
     end
   end
 
@@ -135,7 +143,6 @@ end
 end
 
 def create_beer_with_style_and_rating(score, style, user)
-  style = FactoryGirl.create(:style, name: style)
   beer = FactoryGirl.create(:beer, style: style)
   FactoryGirl.create(:rating, score:score, beer:beer, user:user)
   beer
@@ -147,15 +154,14 @@ def create_beers_with_style_and_ratings(*scores, style, user)
   end
 end
 
-def create_beer_with_brewery_and_rating(score, brewery_name, user)
-  brewery = FactoryGirl.create(:brewery, name:brewery_name)
-  beer = FactoryGirl.create(:beer, brewery:brewery)
+def create_beer_with_brewery_and_rating(score, brewery, user)
+  beer = FactoryGirl.create(:beer, brewery: brewery)
   FactoryGirl.create(:rating, score:score, beer:beer, user:user)
   beer
 end
 
-def create_beers_with_brewery_and_ratings(*scores, brewery_name, user)
+def create_beers_with_brewery_and_ratings(*scores, brewery, user)
   scores.each do |score|
-    create_beer_with_brewery_and_rating(score, brewery_name, user)
+    create_beer_with_brewery_and_rating(score, brewery, user)
   end
 end
