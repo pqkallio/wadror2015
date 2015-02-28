@@ -18,24 +18,42 @@
   No members in this club yet!
 <% else %>
   <ul>
-    <% @beer_club.members.each do |member| %>
-      <li> <%= link_to member.username, user_path(member.id) %> </li>
+    <% @beer_club.memberships.each do |membership| %>
+        <% if membership.confirmed %>
+            <li> <%= link_to membership.user.username, user_path(membership.user.id) %> </li>
+        <% end %>
     <% end %>
   </ul>
 <% end %>
 
 <% if current_user %>
 
-    <% if !@beer_club.members.include? current_user %>
+    <% if not @beer_club.members.include? current_user %>
       <%= form_for(@membership) do |f| %>
           <%= f.hidden_field :beer_club_id %>
           <%= f.submit value:"join the club" %>
       <% end %>
-    <% else %>
+    <% elsif @membership.confirmed %>
+        <% if @applications.count > 0 %>
+            <h2>Applicants</h2>
+            <ul>
+                <% @applications.each do |application| %>
+                    <li><%= application.user.username %>
+                      <%= link_to "confirm", approve_application_membership_path(application), class:"btn btn-primary", method:"post" %>
+                    </li>
+                <% end %>
+            </ul>
+        <% end %>
+
       <%= form_for(@membership, method: "delete") do |f| %>
           <%= f.hidden_field :beer_club_id %>
           <%= f.submit value: "end the membership" %>
       <% end %>
+    <% else %>
+        <%= form_for(@membership, method: "delete") do |f| %>
+            <%= f.hidden_field :beer_club_id %>
+            <%= f.submit value: "cancel application" %>
+        <% end %>
     <% end %>
 
     <%= edit_and_destroy_buttons(@beer_club) %>

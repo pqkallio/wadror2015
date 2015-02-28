@@ -22,11 +22,24 @@
     <%= link_to @user.favorite_style.name, style_path(@user.favorite_style) %>
   <% end %>
 </p>
-<p>member of
-  <% @user.beer_clubs.each do |club| %>
-      <%= link_to club.name, beer_club_path(club.id) %>
+
+<% if @confirmed_memberships.count > 0 %>
+<h5>member of</h5>
+<ul>
+  <% @confirmed_memberships.each do |membership| %>
+      <li> <%= link_to membership.beer_club.name, beer_club_path(membership.beer_club) %> </li>
   <% end %>
-</p>
+</ul>
+<% end %>
+
+<% if @unconfirmed_memberships.count > 0 %>
+<h5>applied membership of</h5>
+<ul>
+  <% @unconfirmed_memberships.each do |membership| %>
+      <li> <%= link_to membership.beer_club.name, beer_club_path(membership.beer_club) %> </li>
+  <% end %>
+</ul>
+<% end %>
 
 <h3>ratings</h3>
 <ul>

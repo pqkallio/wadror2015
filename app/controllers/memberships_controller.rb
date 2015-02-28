@@ -12,6 +12,14 @@ class MembershipsController < ApplicationController
   def show
   end
 
+  def approve_application
+    membership = Membership.find(params[:id])
+    membership.confirmed = true
+    membership.save
+
+    redirect_to beer_club_path(membership.beer_club), notice: "Application approved!"
+  end
+
   # GET /memberships/new
   def new
     @membership = Membership.new
@@ -42,7 +50,7 @@ class MembershipsController < ApplicationController
     respond_to do |format|
       if @membership.valid?
         @membership.save
-        format.html { redirect_to beer_club_path(@membership.beer_club_id), notice: "#{current_user.username} welcome to the club!" }
+        format.html { redirect_to beer_club_path(@membership.beer_club_id), notice: "Your application has been sent!" }
         format.json { render :show, status: :created, location: @membership }
       else
         format.html { render :new }

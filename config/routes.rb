@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :memberships
+  resources :memberships do
+    post 'approve_application', on: :member
+  end
 
   resources :beer_clubs
 
