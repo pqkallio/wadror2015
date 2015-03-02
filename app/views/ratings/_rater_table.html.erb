@@ -2,9 +2,6 @@
   <thead>
   <tr>
     <th>Name</th>
-    <th>Favorite beer</th>
-    <th>Favorite brewery</th>
-    <th>Favorite style</th>
     <th>Ratings made</th>
     <th>Ratings average</th>
   </tr>
@@ -13,9 +10,6 @@
   <% top_raters.each do |rater| %>
       <tr>
         <td><%= link_to rater.username, user_path(rater) %></td>
-        <td><%= rater.favorite_beer %></td>
-        <td><%= link_to rater.favorite_brewery.name, brewery_path(rater.favorite_brewery) %></td>
-        <td><%= link_to rater.favorite_style.name, style_path(rater.favorite_style) %></td>
         <td><%= rater.ratings.count %></td>
         <td><%= rater.average_rating.round(1) %></td>
       </tr>

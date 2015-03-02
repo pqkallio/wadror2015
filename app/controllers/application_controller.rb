@@ -16,6 +16,8 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_that_admin
-    redirect_to signin_path, notice:'sign in with admin account' unless current_user.admin
+    if current_user
+      redirect_to signin_path, notice:'sign in with admin account' unless current_user.admin?
+    end
   end
 end

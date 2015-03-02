@@ -19,6 +19,10 @@ class SessionsController < ApplicationController
     end
   end
 
+  def create_oauth
+    redirect_to :root
+  end
+
   def destroy
     reset_session
     redirect_to :root

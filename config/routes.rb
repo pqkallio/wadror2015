@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'auth/:provider/callback', to: 'sessions#create_oauth'
+
   resources :memberships do
     post 'approve_application', on: :member
   end

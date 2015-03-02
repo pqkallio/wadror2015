@@ -12,7 +12,7 @@ class Brewery < ActiveRecord::Base
   scope :retired, -> { where active:[nil, false] }
 
   def self.top_rated(n)
-    sorted_by_rating_in_desc_ord = Brewery.all.sort_by { |b| -(b.average_rating||0)}
+    sorted_by_rating_in_desc_ord = Brewery.includes(:ratings).all.sort_by { |b| -(b.average_rating||0)}
     sorted_by_rating_in_desc_ord[0..n-1]
   end
 

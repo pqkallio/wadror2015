@@ -5,6 +5,9 @@ env:
   global:
     - BMP_APIKEY=22da9e2e925b493823abbf5318aab45c
     - GMAP_APIKEY=AIzaSyCwlF6LxCOJOZyOLnaVZIQkQZshOY8XMBs
+    - GITHUB_KEY=336e78e3b5ec2f903f69
+    - GITHUB_SECRET=ba70e7c00318e6020163a8e311c8088875d87da1
+
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"

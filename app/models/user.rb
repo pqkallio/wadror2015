@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :ratings, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :beers, through: :ratings
+  has_many :breweries, through: :beers
   has_many :beer_clubs, through: :memberships
 
   def password_validation
@@ -21,7 +22,7 @@ class User < ActiveRecord::Base
   end
 
   def self.top_raters(n)
-    sorted_by_number_of_ratings_made_in_desc_order = User.all.sort_by{ |u| -(u.ratings.count||0) }
+    sorted_by_number_of_ratings_made_in_desc_order = User.includes(:ratings).all.sort_by{ |u| -(u.ratings.count||0) }
     sorted_by_number_of_ratings_made_in_desc_order[0..n-1]
   end
 
