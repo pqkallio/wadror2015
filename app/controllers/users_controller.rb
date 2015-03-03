@@ -77,6 +77,8 @@ class UsersController < ApplicationController
     redirect_to :back, notice:"user account status changed to #{new_status}"
   end
 
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -85,6 +87,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :password, :password_confirmation)
+      params.require(:user).permit(:username, :password, :password_confirmation, :account_enabled, :admin)
     end
 end

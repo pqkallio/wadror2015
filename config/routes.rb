@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'auth/:provider/callback', to: 'sessions#create_oauth'
 
+  post 'users/new_oauth', to: 'users#create_oauth_user'
+
   resources :memberships do
     post 'approve_application', on: :member
   end

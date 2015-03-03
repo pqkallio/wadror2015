@@ -6,7 +6,7 @@ class RatingsController < ApplicationController
     # Vaihtoehtona olisi tallettaa ainakin oluiden reittausten keskiarvot
     # sekä reittausten kokonaismäärä Beer-modeliin.
 
-    check_cache
+    background_worker
 
     @ratings_count = Rating.count
     @recent_ratings = Rails.cache.read("recent ratings")
@@ -41,13 +41,16 @@ class RatingsController < ApplicationController
     redirect_to :back
   end
 
-  private
-
-    def check_cache
-      Rails.cache.write("beer top 3", Beer.top_rated(3), expires_in: 10.minutes) unless Rails.cache.exist?("beer top 3")
-      Rails.cache.write("brewery top 3", Brewery.top_rated(3), expires_in: 10.minutes) unless Rails.cache.exist?("brewery top 3")
-      Rails.cache.write("style top 3", Style.top_rated(3), expires_in: 10.minutes) unless Rails.cache.exist?("style top 3")
-      Rails.cache.write("raters top 3", User.top_raters(3), expires_in: 10.minutes) unless Rails.cache.exist?("raters top 3")
-      Rails.cache.write("recent ratings", Rating.recent, expires_in: 10.minutes) unless Rails.cache.exist?("recent ratings")
+  def background_worker
+    Thread.new do
+      while true do
+        sleep 5.minutes
+        Rails.cache.write("beer top 3", Beer.top_rated(3))
+        Rails.cache.write("brewery top 3", Brewery.top_rated(3))
+        Rails.cache.write("style top 3", Style.top_rated(3))
+        Rails.cache.write("raters top 3", User.top_raters(3))
+        Rails.cache.write("recent ratings", Rating.recent)
+      end
     end
+  end
 end

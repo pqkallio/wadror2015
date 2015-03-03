@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_secure_password
 
   validates :username, uniqueness: true,
-                       length: { in: 3..15 }
+                       length: { in: 3..50 }
   validate :password_validation
 
   has_many :ratings, dependent: :destroy
